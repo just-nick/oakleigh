@@ -1,0 +1,35 @@
+{
+  "name": "@oakleigh/deploy",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Just-Nick <nick@just-nick.com>",
+  "homepage": "https://github.com/just-nick/oakleigh#readme",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/just-nick/oakleigh.git"
+  },
+  "bin": {
+    "oakleigh": ".dist/cli.js"
+  },
+  "scripts": {
+    "synth": "cdk synth",
+    "build": "tsc"
+  },
+  "bugs": {
+    "url": "https://github.com/just-nick/oakleigh/issues"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^5.2.0",
+    "@pulumi/aws-native": "^0.15.0",
+    "@pulumi/pulumi": "^3.30.0",
+    "aws-cdk": "^2.20.0",
+    "aws-cdk-lib": "^2.20.0",
+    "constructs": "^10.0.120",
+    "esbuild": "^0.14.36",
+    "process": "^0.11.10"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.25"
+  }
+}

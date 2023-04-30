@@ -1,3 +1,9 @@
+# CDK
+cdk.out/
+
+# Builds
+.dist/
+
 # Logs
 logs
 *.log
