@@ -27,7 +27,9 @@
     "aws-cdk-lib": "^2.20.0",
     "constructs": "^10.0.120",
     "esbuild": "^0.14.36",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "command-line-args": "^5.2.1",
+    "@types/command-line-args": "^5.2.0"
   },
   "devDependencies": {
     "@types/node": "^17.0.25"

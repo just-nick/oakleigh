@@ -7,7 +7,7 @@ import { OakleighComponentSet } from "../common/oakleigh-component";
 import {
   compileFunctionEndpoint,
   mapFunctionEndpoint,
-} from "./builder/function-endpoint";
+} from "./builder/endpoint";
 import { FileContents } from "../common/file-contents";
 
 const { readFile } = promises;
@@ -45,10 +45,14 @@ export const build = async () => {
 
   const oakleighComponents = fileContents.reduce<OakleighComponentSet>(
     (set, contents) => {
-      switch (contents.comments?.["oakleigh"]) {
-        case "function-endpoint":
+      const componentType = contents.comments?.["oakleigh"]
+      switch (componentType) {
+        case "endpoint":
           return { ...set, [contents.key]: mapFunctionEndpoint(contents) };
+        case undefined:
+          return set;
         default:
+          console.warn("Unexpected component type '%s' found", componentType);
           return set;
       }
     },
@@ -57,10 +61,11 @@ export const build = async () => {
 
   if (
     Object.values(oakleighComponents).some(
-      (f) => f.type === "function-endpoint"
+      (f) => f.type === "endpoint"
     )
-  )
+  ) {
     compileFunctionEndpoint(outputPath, oakleighComponents);
+  }
 
   return oakleighComponents;
 };

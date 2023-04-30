@@ -1,9 +1,8 @@
 import { APIGatewayProxyEventV2, APIGatewayProxyResultV2 } from "aws-lambda";
 
 /**
- * Something useful
  * @oakleigh endpoint
- * @path /hello
+ * @path hello
  */
 export const handler = async (
   event: APIGatewayProxyEventV2

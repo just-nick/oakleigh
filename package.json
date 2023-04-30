@@ -8,7 +8,10 @@
     "nx": "15.6.2"
   },
   "scripts": {
-    "start": "nx build @oakleigh/deploy && nx run @oakleigh/example:go"
+    "start": "npm run build && nx run @oakleigh/example:deploy",
+    "cancel": "npm run build && nx run @oakleigh/example:cancel",
+    "destroy": "npm run build && nx run @oakleigh/example:destroy",
+    "build": "nx build @oakleigh/deploy"
   },
   "dependencies": {
     "clean-webpack-plugin": "^4.0.0",

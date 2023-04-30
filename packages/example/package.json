@@ -15,7 +15,9 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "go": "oakleigh"
+    "deploy": "oakleigh deploy",
+    "destroy": "oakleigh destroy",
+    "cancel": "oakleigh cancel"
   },
   "bugs": {
     "url": "https://github.com/just-nick/oakleigh/issues"

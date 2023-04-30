@@ -1,21 +1,50 @@
+import { Route } from "@pulumi/aws/apigatewayv2";
+import { Output } from "@pulumi/pulumi";
+import { createApiGateway } from "./api/api-gateway";
+import { createApiStage } from "./api/api-stage";
 import { createApiFunctionTrigger } from "./api/lambda-trigger";
 import { createPublicBucket } from "./bucket/public-bucket";
-import { OakleighComponentSet } from "./common/oakleigh-component";
+import {
+  OakleighComponentSet,
+  OakleighFunctionEndpoint,
+} from "./common/oakleigh-component";
 import { createLambdaFunction } from "./function/function";
 
 export const buildProgram = (handlers: OakleighComponentSet) => async () => {
-  const component = Object.values(handlers)[0];
-  const lambdaFunction = createLambdaFunction(
-    component.details.path,
-    component.details.handlerName,
-    component.details.exportName
-  );
-  const apiTrigger = createApiFunctionTrigger(lambdaFunction);
   // const siteBucket = createPublicBucket("s3-website-bucket");
+  // const set: Record<string, any> = {};
+  const routes: Route[] = [];
+  const outputs: Record<string, any> = {};
 
-  return {
-    // websiteUrl: siteBucket.websiteURL,
-    // bucketId: siteBucket.id,
-    api: apiTrigger.url,
-  };
+  for (const [key, component] of Object.entries(handlers)) {
+    switch (component.type) {
+      case "endpoint": {
+        const endpoint = buildEndpoint(component);
+        routes.push(endpoint.route);
+      }
+    }
+  }
+
+  if (routes.length > 0) {
+    const apigw = createApiGateway();
+    const stage = createApiStage(apigw, routes);
+    for (const [outputName, outputValue] of Object.entries(stage.outputs)) {
+      outputs[`api_${outputName}`] = outputValue;
+    }
+  }
+
+  return outputs;
 };
+
+function buildEndpoint(component: OakleighFunctionEndpoint) {
+  const lambdaFunction = createLambdaFunction(component);
+
+  const apigw = createApiGateway();
+  const apiTrigger = createApiFunctionTrigger(
+    apigw,
+    lambdaFunction.lambdaFunction,
+    component
+  );
+
+  return { ...lambdaFunction, ...apiTrigger };
+}

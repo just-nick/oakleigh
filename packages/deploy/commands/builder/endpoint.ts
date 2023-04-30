@@ -9,7 +9,7 @@ export function mapFunctionEndpoint(
 ): OakleighFunctionEndpoint {
   return {
     filename: fileContents.filename,
-    type: "function-endpoint",
+    type: "endpoint",
     details: {
       path: fileContents.comments?.["path"] ?? "",
       handlerName: fileContents.key,
@@ -25,10 +25,14 @@ export function compileFunctionEndpoint(
   webpack(
     {
       entry: Object.keys(oakleighHandlers).reduce<webpack.EntryObject>(
-        (entry, handlerName) => ({
-          ...entry,
-          [handlerName]: oakleighHandlers[handlerName].filename,
-        }),
+        (entry, handlerName) => {
+          oakleighHandlers[handlerName].details.compiledPath = outputPath;
+
+          return {
+            ...entry,
+            [handlerName]: oakleighHandlers[handlerName].filename,
+          };
+        },
         {}
       ),
       output: {
