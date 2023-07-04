@@ -1,6 +1,6 @@
 import { asset } from "@pulumi/pulumi";
 import { iam, lambda } from "@pulumi/aws";
-import { functionEndpointName, OakleighFunctionEndpoint } from "../common/oakleigh-component";
+import { functionEndpointName, OakleighFunctionEndpoint } from "../../common/oakleigh-component";
 
 export function createLambdaFunction(component: OakleighFunctionEndpoint) {
   if (!component.details.compiledPath) {

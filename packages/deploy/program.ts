@@ -1,14 +1,14 @@
 import { Route } from "@pulumi/aws/apigatewayv2";
 import { Output } from "@pulumi/pulumi";
-import { createApiGateway } from "./api/api-gateway";
-import { createApiStage } from "./api/api-stage";
-import { createApiFunctionTrigger } from "./api/lambda-trigger";
-import { createPublicBucket } from "./bucket/public-bucket";
+import { createApiGateway } from "./infra/api/api-gateway";
+import { createApiStage } from "./infra/api/api-stage";
+import { createApiFunctionTrigger } from "./infra/api/lambda-trigger";
+import { createPublicBucket } from "./infra/bucket/public-bucket";
 import {
   OakleighComponentSet,
   OakleighFunctionEndpoint,
 } from "./common/oakleigh-component";
-import { createLambdaFunction } from "./function/function";
+import { createLambdaFunction } from "./infra/function/function";
 
 export const buildProgram = (handlers: OakleighComponentSet) => async () => {
   // const siteBucket = createPublicBucket("s3-website-bucket");

@@ -12,18 +12,23 @@ import { destroy } from "./commands/destroy";
     { name: "command", multiple: true, defaultOption: true },
   ];
   const options = commandLineArgs(commandList);
+  const command = options["command"]?.[0];
   console.log(options);
 
-  const handlers = await build();
-
-  switch (options["command"]?.[0]) {
-    case "cancel":
+  switch (command) {
+    case "cancel": {
+      const handlers = await build();
       return cancel(handlers);
+    }
 
-    case "destroy":
+    case "destroy": {
+      const handlers = await build();
       return await destroy(handlers);
+    }
 
-    case "deploy":
+    case "deploy": {
+      const handlers = await build();
       return await deploy(handlers);
+    }
   }
 })();
