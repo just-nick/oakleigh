@@ -5,16 +5,15 @@
   "author": "Just-Nick <nick@just-nick.com>",
   "homepage": "https://github.com/just-nick/oakleigh#readme",
   "license": "ISC",
+  "main": ".dist/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/just-nick/oakleigh.git"
   },
-  "bin": {
-    "oakleigh": ".dist/cli.js"
-  },
   "scripts": {
     "synth": "cdk synth",
-    "build": "tsc"
+    "build": "tsc",
+    "watch": "tsc --watch"
   },
   "bugs": {
     "url": "https://github.com/just-nick/oakleigh/issues"

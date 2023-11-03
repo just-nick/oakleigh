@@ -1,31 +1,25 @@
 {
-  "name": "@oakleigh/example",
+  "name": "@oakleigh/cli",
   "version": "0.0.0",
   "description": "> TODO: description",
   "author": "Just-Nick <nick@just-nick.com>",
   "homepage": "https://github.com/just-nick/oakleigh#readme",
   "license": "ISC",
-  "main": "index.ts",
-  "files": [
-    "lib"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/just-nick/oakleigh.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1",
-    "deploy": "oakleigh deploy",
-    "destroy": "oakleigh destroy",
-    "cancel": "oakleigh cancel"
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "bin": {
+    "oakleigh": ".dist/index.js"
   },
   "bugs": {
     "url": "https://github.com/just-nick/oakleigh/issues"
   },
   "dependencies": {
-    "@oakleigh/cli": "^0.0.0",
-    "@oakleigh/deploy": "^0.0.0",
-    "@types/aws-lambda": "^8.10.95",
-    "@types/aws-sdk": "^2.7.0"
+    "@oakleigh/deploy": "^0.0.0"
   }
 }

@@ -1,12 +1,15 @@
 import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
-import { OakleighFunctionEndpoint, functionEndpointName } from "../function/function-endpoint";
+import {
+  OakleighFunctionWebsocket,
+  functionEndpointName,
+} from "../function/function-endpoint";
 import { Api } from "@pulumi/aws/apigatewayv2";
 
-export function createApiFunctionTrigger(
+export function createWebsocketFunctionTrigger(
   apigw: Api,
   lambdaFunction: aws.lambda.Function,
-  component: OakleighFunctionEndpoint
+  component: OakleighFunctionWebsocket
 ) {
   const lambdaPermission = new aws.lambda.Permission(
     functionEndpointName(component, "lambdaPermission"),
@@ -25,26 +28,19 @@ export function createApiFunctionTrigger(
       apiId: apigw.id,
       integrationType: "AWS_PROXY",
       integrationUri: lambdaFunction.arn,
-      integrationMethod: "POST",
-      payloadFormatVersion: "2.0",
-      passthroughBehavior: "WHEN_NO_MATCH",
     }
   );
 
-  const routeKey = `${component.details.method || "GET"} /${
-    component.details.path
-  }`;
-  console.log(routeKey);
   const route = new aws.apigatewayv2.Route(
     functionEndpointName(component, "apiRoute"),
     {
       apiId: apigw.id,
-      routeKey,
+      routeKey: component.details.path,
       target: pulumi.interpolate`integrations/${integration.id}`,
     }
   );
 
-  return { route, routeKey };
+  return { route };
 
   // const endpoint = pulumi.interpolate`${apigw.apiEndpoint}/${stage.name}`;
 }

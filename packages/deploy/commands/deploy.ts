@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
-import { OakleighComponentSet } from "../common/oakleigh-component";
+import { OakleighInfraDescriptionSet } from "../infra/oakleigh-infra";
 import { getStack } from "./stack";
 
-export const deploy = async (handlers: OakleighComponentSet) => {
+export const deploy = async (handlers: OakleighInfraDescriptionSet) => {
   const { stack } = await getStack(handlers);
 
   console.info("refreshing stack...");

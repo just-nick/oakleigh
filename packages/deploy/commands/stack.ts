@@ -1,9 +1,9 @@
 import { LocalWorkspace } from "@pulumi/pulumi/automation";
 import { Region } from "@pulumi/aws-native";
 import { buildProgram } from "../program";
-import { OakleighComponentSet } from "../common/oakleigh-component";
+import { OakleighInfraDescriptionSet } from "../infra/oakleigh-infra";
 
-export async function getStack(handlers: OakleighComponentSet) {
+export async function getStack(handlers: OakleighInfraDescriptionSet) {
   const stackName = "dev";
   const projectName = "lastTime";
   const program = buildProgram(handlers);

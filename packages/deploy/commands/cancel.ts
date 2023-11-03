@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { getStack } from "./stack";
-import { OakleighComponentSet } from "../common/oakleigh-component";
+import { OakleighInfraDescriptionSet } from "../infra/oakleigh-infra";
 
-export const cancel = async (handlers: OakleighComponentSet) => {
+export const cancel = async (handlers: OakleighInfraDescriptionSet) => {
   const { stack } = await getStack(handlers);
 
   console.info("Cancelling stack deploy...");

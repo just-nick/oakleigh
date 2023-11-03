@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import { getStack } from "./stack";
-import { OakleighComponentSet } from "../common/oakleigh-component";
+import { OakleighInfraDescriptionSet } from "../infra/oakleigh-infra";
 
-export const destroy = async (handlers: OakleighComponentSet) => {
+export const destroy = async (handlers: OakleighInfraDescriptionSet) => {
   const { stack } = await getStack(handlers);
 
   console.info("destroying stack...");

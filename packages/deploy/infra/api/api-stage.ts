@@ -2,12 +2,15 @@ import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
 import { Api, Route } from "@pulumi/aws/apigatewayv2";
 
-export function createApiStage(apigw: Api, routes: Route[]) {
+export function createApiStage(
+  gw: { apiGateway: Api; websocketGateway: Api },
+  routes: Route[]
+) {
   const stack = pulumi.getStack();
-  const stage = new aws.apigatewayv2.Stage(
+  const apiStage = new aws.apigatewayv2.Stage(
     "apiStage",
     {
-      apiId: apigw.id,
+      apiId: gw.apiGateway.id,
       name: stack,
       routeSettings: routes.map((r) => ({
         routeKey: r.routeKey,
@@ -18,11 +21,18 @@ export function createApiStage(apigw: Api, routes: Route[]) {
     },
     { dependsOn: routes }
   );
+  const websocketStage = new aws.apigatewayv2.Stage("websocketStage", {
+    apiId: gw.websocketGateway.id,
+    name: stack,
+    autoDeploy: true,
+  });
 
   return {
-    stage,
+    apiStage,
+    websocketStage,
     outputs: {
-      url: pulumi.interpolate`${apigw.apiEndpoint}/${stage.name}`,
+      url: pulumi.interpolate`${gw.apiGateway.apiEndpoint}/${apiStage.name}`,
+      websocket: websocketStage.invokeUrl,
       routes: routes.map((route) => route.routeKey),
     },
   };

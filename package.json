@@ -11,7 +11,7 @@
     "start": "npm run build && nx run @oakleigh/example:deploy",
     "cancel": "npm run build && nx run @oakleigh/example:cancel",
     "destroy": "npm run build && nx run @oakleigh/example:destroy",
-    "build": "nx build @oakleigh/deploy"
+    "build": "nx run @oakleigh/deploy:build && nx run @oakleigh/cli:build"
   },
   "dependencies": {
     "clean-webpack-plugin": "^4.0.0",
